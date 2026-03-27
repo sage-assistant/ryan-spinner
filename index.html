@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Ryan Spinner, MD — Institute for Residential Structural Medicine</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2040;
+    --navy-light: #1a3060;
+    --red: #c8102e;
+    --red-light: #e8192e;
+    --white: #f8f8f6;
+    --cream: #f0ede8;
+    --grey: #8a9ab5;
+    --border: #1e3a6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ===== SPLASH SCREEN ===== */
+  #splash {
+    position: fixed;
+    inset: 0;
+    background: var(--navy);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  #splash.fade-out {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+
+  .splash-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+    line-height: 1.3;
+    max-width: 700px;
+  }
+
+  .splash-divider {
+    width: 120px;
+    height: 2px;
+    background: var(--red);
+    margin: 1.5rem auto;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .splash-sub {
+    font-size: 0.9rem;
+    color: var(--grey);
+    font-style: italic;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .splash-live {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.6s forwards;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-light);
+    font-weight: 600;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--red-light);
+    border-radius: 50%;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.7); }
+  }
+
+  .enter-btn {
+    margin-top: 2.5rem;
+    padding: 1rem 2.8rem;
+    background: transparent;
+    border: 1.5px solid var(--red);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeUp 1s ease 2s forwards;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .enter-btn:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .splash-disclaimer {
+    position: absolute;
+    bottom: 2rem;
+    font-size: 0.7rem;
+    color: var(--border);
+    opacity: 0;
+    animation: fadeUp 1s ease 2.2s forwards;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  #main {
+    display: none;
+  }
+
+  #main.visible {
+    display: block;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 22, 40, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .nav-live {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red-light);
+    font-weight: 600;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: radial-gradient(ellipse at 50% 0%, var(--navy-light) 0%, var(--navy) 70%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(30, 58, 106, 0.15) 40px,
+      rgba(30, 58, 106, 0.15) 41px
+    );
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-portrait {
+    width: 160px;
+    height: 180px;
+    background: var(--navy-mid);
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    position: relative;
+  }
+
+  .hero-portrait::before {
+    content: '📋';
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-portrait-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    font-weight: 600;
+  }
+
+  .hero-portrait-badge {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    background: var(--red);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .hero-credentials {
+    font-size: 0.82rem;
+    color: var(--red-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-style: italic;
+    color: var(--grey);
+    margin-bottom: 2rem;
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 2px;
+    background: var(--red);
+    margin: 0 auto 2rem;
+  }
+
+  .hero-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    color: var(--cream);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .hero-counter {
+    margin-top: 2.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .hero-counter span {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 0.2rem;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    color: var(--grey);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto;
+  }
+
+  /* ===== SPECIALIZATIONS ===== */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .spec-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+  }
+
+  .spec-card.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spec-card:hover {
+    border-color: var(--red);
+  }
+
+  .spec-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .spec-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+
+  .spec-desc {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.7;
+  }
+
+  .spec-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(200, 16, 46, 0.15);
+    border: 1px solid rgba(200, 16, 46, 0.3);
+    color: var(--red-light);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ===== DIAGNOSTIC TOOL ===== */
+  .diagnostic-wrap {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .diagnostic-wrap h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .diagnostic-wrap .form-note {
+    font-size: 0.78rem;
+    color: var(--grey);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group select {
+    width: 100%;
+    background: var(--navy);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.8rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .form-group select:focus {
+    border-color: var(--red);
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--red);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .checkbox-group .cb-text {
+    font-size: 0.85rem;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  .checkbox-group .cb-note {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--red-light);
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+
+  .diagnose-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--red);
+    border: none;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background 0.3s;
+  }
+
+  .diagnose-btn:hover { background: #a50d25; }
+
+  .diagnosis-result {
+    display: none;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--red);
+    background: rgba(200, 16, 46, 0.06);
+  }
+
+  .diagnosis-result.show { display: block; }
+
+  .diagnosis-result .dr-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-light);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .diagnosis-result .dr-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+  }
+
+  .diagnosis-result .dr-code {
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== PUBLICATIONS ===== */
+  .pub-list {
+    list-style: none;
+  }
+
+  .pub-item {
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .pub-item.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .pub-year {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--red);
+    min-width: 42px;
+    padding-top: 0.1rem;
+  }
+
+  .pub-content {}
+
+  .pub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+  }
+
+  .pub-journal {
+    font-size: 0.8rem;
+    color: var(--grey);
+  }
+
+  .pub-badge {
+    display: inline-block;
+    margin-left: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    background: rgba(200, 16, 46, 0.12);
+    border: 1px solid rgba(200, 16, 46, 0.25);
+    color: var(--red-light);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-wrap {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .faq-header {
+    padding: 1.5rem 2rem;
+    background: rgba(30, 58, 106, 0.5);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .faq-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .faq-badge {
+    padding: 0.2rem 0.6rem;
+    background: var(--red);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .faq-item {
+    padding: 1.8rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.7rem;
+    color: var(--white);
+  }
+
+  .faq-q::before {
+    content: 'Q: ';
+    color: var(--red-light);
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    color: var(--grey);
+    line-height: 1.7;
+  }
+
+  .faq-a::before {
+    content: 'A: ';
+    color: var(--grey);
+    font-weight: 600;
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .testimonial.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .testimonial::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: var(--border);
+    line-height: 0;
+    position: absolute;
+    top: 2rem;
+    left: 1.5rem;
+  }
+
+  .testimonial-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--cream);
+    padding-top: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .testimonial-meta {
+    font-size: 0.75rem;
+    color: var(--grey);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  .testimonial-meta strong {
+    display: block;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .testimonial-case {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    background: rgba(200, 16, 46, 0.1);
+    color: var(--red-light);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ===== FLOWCHART ===== */
+  .flowchart {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .flow-node {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 1.2rem 2rem;
+    margin: 0 auto 0;
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    max-width: 380px;
+  }
+
+  .flow-node.start-node {
+    background: rgba(30, 58, 106, 0.6);
+    border-color: var(--navy-light);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .flow-node.end-node {
+    background: var(--red);
+    border-color: var(--red);
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: none;
+  }
+
+  .flow-node.end-node.show { display: inline-block; }
+
+  .flow-arrow {
+    text-align: center;
+    padding: 0.5rem 0;
+    color: var(--border);
+    font-size: 1.2rem;
+  }
+
+  .flow-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 0.8rem 0;
+  }
+
+  .flow-btn {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .flow-btn:hover { background: var(--navy-light); border-color: var(--grey); }
+  .flow-btn.yes:hover { background: rgba(200,16,46,0.15); border-color: var(--red); }
+
+  .flow-step { display: none; text-align: center; }
+  .flow-step.active { display: block; }
+
+  .flow-reset {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--grey);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+
+  .flow-reset:hover { border-color: var(--grey); color: var(--white); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .footer-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+
+  .footer-text {
+    font-size: 0.78rem;
+    color: var(--grey);
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: var(--border);
+    margin-top: 1.5rem;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: var(--navy-mid);
+    border: 1px solid var(--red);
+    max-width: 600px;
+    width: 100%;
+    padding: 2.5rem;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--grey);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: var(--red-light);
+    letter-spacing: 0.08em;
+  }
+
+  .modal-sub {
+    font-size: 0.75rem;
+    color: var(--grey);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .redacted-line {
+    height: 1.2rem;
+    background: var(--white);
+    margin: 0.5rem 0;
+    opacity: 0.9;
+  }
+
+  .redacted-line.short { width: 40%; }
+  .redacted-line.med { width: 65%; }
+  .redacted-line.long { width: 90%; }
+  .redacted-line.full { width: 100%; }
+
+  .modal-note {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-left: 2px solid var(--red);
+    background: rgba(200,16,46,0.06);
+    font-size: 0.82rem;
+    color: var(--cream);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .modal-stamp {
+    text-align: right;
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    color: rgba(200,16,46,0.3);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    font-family: 'Playfair Display', serif;
+    transform: rotate(-8deg);
+    display: inline-block;
+    float: right;
+  }
+
+  /* ===== EASTER EGG TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--navy-mid);
+    border: 1px solid var(--red);
+    padding: 1rem 2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--cream);
+    z-index: 3000;
+    text-align: center;
+    max-width: 400px;
+    transition: transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ===== UTILITY ===== */
+  .full-border {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bg-mid {
+    background: var(--navy-mid);
+  }
+
+  .text-center { text-align: center; }
+
+  .red { color: var(--red-light); }
+
+  @media (max-width: 600px) {
+    section { padding: 3rem 1.2rem; }
+    .diagnostic-wrap { padding: 1.8rem 1.2rem; }
+    .faq-item { padding: 1.4rem 1.2rem; }
+    .faq-header { padding: 1.2rem; }
+    nav { padding: 0.8rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">The Institute for<br>Residential Structural Medicine</div>
+  <div class="splash-divider"></div>
+  <div class="splash-sub">Established when Ryan first looked at a house and said "that's not right"</div>
+  <div class="splash-live">
+    <div class="pulse-dot"></div>
+    LIVE: Critical Diagnosis in Progress
+  </div>
+  <button class="enter-btn" onclick="enterFacility()">Enter Facility</button>
+  <div class="splash-disclaimer">CONFIDENTIAL — FOR PATIENT USE ONLY</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <nav>
+    <div class="nav-logo">IRSM — Est. When Ryan Said "That's Not Right"</div>
+    <div class="nav-live">
+      <div class="pulse-dot"></div>
+      Live Diagnosis
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Faculty Profile — Distinguished Chair of House Medicine</div>
+    <div class="hero-portrait">
+      <div class="hero-portrait-label">DR. SPINNER</div>
+      <div class="hero-portrait-badge">FACULTY</div>
+    </div>
+    <div class="hero-name" id="drName">Dr. Ryan Spinner</div>
+    <div class="hero-credentials">MD (Master of Dwellings) &nbsp;·&nbsp; CAHPI &nbsp;·&nbsp; RDC &nbsp;·&nbsp; SBSI &nbsp;·&nbsp; CDU</div>
+    <div class="hero-title">Distinguished Professor of Applied House Medicine<br><em style="font-size:0.85rem; color: var(--grey);">Carson Dunlop University · Toronto, Canada · @drspinner</em></div>
+    <div class="hero-divider"></div>
+    <div class="hero-quote">"The house does not lie. Only its owners do."</div>
+    <div class="hero-counter">
+      <span id="houseCounter">0</span>
+      Houses Diagnosed and Counting
+    </div>
+  </div>
+
+  <!-- SPECIALIZATIONS -->
+  <section>
+    <div class="section-label">Clinical Expertise</div>
+    <div class="section-title">Areas of Specialization</div>
+    <p class="section-subtitle">Dr. Spinner's practice covers the full spectrum of residential pathology. Where others see a house, he sees a patient in denial.</p>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-icon">🏚️</div>
+        <div class="spec-name">Foundational Trauma</div>
+        <div class="spec-desc">Diagnosis and treatment of cracked foundations, subsidence anxiety, and load-bearing denial. Specializes in helping homeowners accept what the previous inspector "didn't think was a big deal."</div>
+        <div class="spec-tag">High Severity</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🌬️</div>
+        <div class="spec-name">Respiratory Pathology</div>
+        <div class="spec-desc">HVAC dysfunction, duct obstruction, and furnace personality disorders. Pioneered the diagnostic framework for what Dr. Spinner calls "the sound a furnace makes right before it decides to stop."</div>
+        <div class="spec-tag">Urgent Care</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🏠</div>
+        <div class="spec-name">Dermatological Disorders</div>
+        <div class="spec-desc">Roof deterioration, fascia peeling, exterior cladding syndrome, and asphalt shingle alopecia. If the house has a skin condition, Dr. Spinner will find it and charge you appropriately for the knowledge.</div>
+        <div class="spec-tag">Chronic</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">🔧</div>
+        <div class="spec-name">Cardiovascular Systems</div>
+        <div class="spec-desc">Plumbing pressure irregularities, water hammer trauma, and pipe anxiety. Renowned for his ability to listen to a wall and hear things that will make your mortgage feel worse than it already does.</div>
+        <div class="spec-tag">Emergency</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">⚡</div>
+        <div class="spec-name">Neurological Assessment</div>
+        <div class="spec-desc">Electrical panel examination, aluminum wiring PTSD, and knob-and-tube grief counseling. Author of the landmark study "That Is Not Up To Code And Has Never Been Up To Code."</div>
+        <div class="spec-tag">Critical</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-icon">💧</div>
+        <div class="spec-name">Moisture Psychiatry</div>
+        <div class="spec-desc">Basement dampness disorder, attic condensation mania, and efflorescence denial. Known for his compassionate but firm delivery of the phrase "this has been happening for a very long time."</div>
+        <div class="spec-tag">Pervasive</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- DIAGNOSTIC TOOL -->
+  <section class="text-center">
+    <div class="section-label">Clinical Services</div>
+    <div class="section-title">House Symptom Checker</div>
+    <p class="section-subtitle" style="margin: 0 auto 2.5rem;">Describe your home's symptoms below. Dr. Spinner's diagnostic algorithm will assess your situation with the clinical objectivity of a man who has seen things in your attic that you cannot un-see.</p>
+    <div class="diagnostic-wrap">
+      <h3>Patient Intake Form</h3>
+      <p class="form-note">All information is confidential. Results are not legal advice. Dr. Spinner is not responsible for your choices up to this point.</p>
+      <div class="form-group">
+        <label>Primary Complaint</label>
+        <select id="complaint">
+          <option value="">— Select your home's chief complaint —</option>
+          <option>My basement smells like regret</option>
+          <option>The furnace is making a noise I can only describe as "ominous"</option>
+          <option>There's a crack in the foundation the previous owner called "decorative"</option>
+          <option>The electrical panel has a Post-It note that says DO NOT TOUCH</option>
+          <option>My attic has achieved sentience</option>
+          <option>The previous inspector said it was "fine" and then handed me a business card for a contractor</option>
+          <option>There is mold. I have been told this is "normal mold."</option>
+          <option>The house settles at night. It sounds like it's sighing.</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Duration of Symptoms</label>
+        <select id="duration">
+          <option value="">— When did you first notice this? —</option>
+          <option>Since the inspection (the other inspection. The one that missed this.)</option>
+          <option>Before the inspection but I ignored it</option>
+          <option>Since I bought this money pit</option>
+          <option>Since my parents warned me about this neighbourhood</option>
+          <option>The listing said it was "move-in ready" so I assumed never</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="realtor">
+          <div class="cb-text">
+            Has this been discussed with your real estate agent?
+            <span class="cb-note">Your real estate agent is not a doctor.</span>
+          </div>
+        </div>
+      </div>
+      <button class="diagnose-btn" onclick="diagnose()">Submit for Dr. Spinner's Diagnosis</button>
+      <div class="diagnosis-result" id="diagResult">
+        <div class="dr-label">Official Diagnosis — Dr. Ryan Spinner, MD</div>
+        <div class="dr-text" id="diagText"></div>
+        <div class="dr-code" id="diagCode"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PUBLICATIONS -->
+  <section>
+    <div class="section-label">Academic Output</div>
+    <div class="section-title">Research & Publications</div>
+    <p class="section-subtitle">Dr. Spinner has contributed extensively to the field of Residential Structural Medicine. His work is cited, though not always by people who are happy about it.</p>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div class="pub-year">2019</div>
+        <div class="pub-content">
+          <div class="pub-title">"Knob-and-Tube: A Love Story That Must End"</div>
+          <div class="pub-journal">Journal of Residential Electrical Grief, Vol. 12 · <span class="pub-badge">Peer Reviewed</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2021</div>
+        <div class="pub-content">
+          <div class="pub-title">"The Five Stages of Foundation Crack Denial"</div>
+          <div class="pub-journal">Canadian Home Pathology Review, Vol. 7 · <span class="pub-badge">Most Cited 2021</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2022</div>
+        <div class="pub-content">
+          <div class="pub-title">"Attic Ventilation and the Human Condition: A Philosophical Inquiry"</div>
+          <div class="pub-journal">Annals of Roofing Psychology, Vol. 3 · <span class="pub-badge">Featured</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2023</div>
+        <div class="pub-content">
+          <div class="pub-title">"Why Your Home Inspector Was Right and You Should Have Listened"</div>
+          <div class="pub-journal">Everyone Already Knew This Quarterly, Vol. 18 · <span class="pub-badge">Open Access</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2024</div>
+        <div class="pub-content">
+          <div class="pub-title">"@drspinner: The Handle, The Legend, The Medical License Question"</div>
+          <div class="pub-journal">Instagram Medical Credentials Journal, First Edition · <span class="pub-badge">Controversial</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <div class="pub-title">"Vendor Disclosure Deficiency Syndrome: A Toronto Case Study"</div>
+          <div class="pub-journal">GTA Real Estate & Grief Review, Vol. 4 · <span class="pub-badge">Awaiting Publication</span></div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- FAQ -->
+  <section class="bg-mid full-border" style="max-width:100%; padding: 5rem 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="section-label">Patient Information</div>
+      <div class="section-title">Frequently Asked Questions</div>
+      <p class="section-subtitle">Answers compiled from the most common enquiries received by the Institute. Dr. Spinner has reviewed and approved all responses.</p>
+      <div class="faq-wrap">
+        <div class="faq-header">
+          <h3>The @drspinner Question</h3>
+          <div class="faq-badge">Official Position</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is Ryan Spinner actually a doctor?</div>
+          <div class="faq-a">Ryan holds a Master of Dwellings (MD) from Carson Dunlop University, the most prestigious institution that has ever examined your attic. His Instagram handle @drspinner was not chosen lightly. It was chosen after years — years — of diagnosing residential illness. The provincial medical regulator has been notified. They have not responded.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Should I call him "Dr. Spinner"?</div>
+          <div class="faq-a">Yes. Absolutely yes. He will not correct you. This is, in fact, the preferred form of address. "Hey Ryan" is also technically acceptable, but ask yourself: is it, really?</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is the difference between Ryan Spinner and a medical doctor?</div>
+          <div class="faq-a">A medical doctor cannot tell you why your bathroom smells like that. Ryan can. A medical doctor cannot explain the stain on your ceiling in terms of both its severity and your personal culpability in ignoring it for three years. Ryan can. A medical doctor went to school longer. Ryan went to more houses. The jury is out.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is Dr. Spinner's brother Andrew also a doctor?</div>
+          <div class="faq-a">Andrew Spinner runs a canoe shop in Gatineau and manages a private lending firm. He has no formal medical credentials. However, he has paddled into situations that most people would consider structurally unsound. The Institute considers this adjacent.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Will reading Dr. Spinner's report make me sad?</div>
+          <div class="faq-a">Yes. This is expected. This is, in fact, the correct response. The report is designed to make you feel things. Mostly about your HVAC system. Dr. Spinner describes this as "therapeutic honesty." You will describe it as "reading 47 pages on a Sunday night."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="section-label">Case Studies</div>
+    <div class="section-title">Patient Testimonials</div>
+    <p class="section-subtitle">The following accounts have been peer-reviewed for accuracy. Identifying information has been removed at the request of people who are still not over it.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="testimonial-text">Dr. Spinner identified a "suspicious crack" in my foundation that my previous inspector called "character." He was right. I have no character left. Only repair bills.</div>
+        <div class="testimonial-meta">
+          <strong>Anonymous Toronto Homeowner</strong>
+          North York · Detached, 1967
+          <div class="testimonial-case">Case #4471</div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-text">He looked at my electrical panel for 45 seconds and said "this is a problem." I did not ask which problem. I sensed that asking would reveal additional problems. I was correct not to ask. There were several.</div>
+        <div class="testimonial-meta">
+          <strong>Distressed Client</strong>
+          East York · Semi-Detached, 1954
+          <div class="testimonial-case">Case #8823</div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-text">His report was 47 pages. I read all 47 pages. I cried. He said that was a normal response. He said most people cry somewhere around page 31, which is where the attic section begins. He was not wrong.</div>
+        <div class="testimonial-meta">
+          <strong>Recent Home Purchaser</strong>
+          Scarborough · Bungalow, 1962
+          <div class="testimonial-case">Case #2209</div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-text">I asked him to be gentle with his delivery. He said "I'll do my best." He then handed me a 12-item list of "immediate concerns." Item 7 was just the word "plumbing" with no further elaboration. We have not spoken since.</div>
+        <div class="testimonial-meta">
+          <strong>First-Time Buyer</strong>
+          Leslieville · Victorian, 1901
+          <div class="testimonial-case">Case #1137</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- FLOWCHART -->
+  <section class="text-center">
+    <div class="section-label">Clinical Decision Tree</div>
+    <div class="section-title">The Spinner-Dunlop Diagnostic Method</div>
+    <p class="section-subtitle" style="margin: 0 auto 3rem;">A peer-reviewed framework for residential assessment. Navigate each decision node to receive your recommendation.</p>
+    <div class="flowchart">
+
+      <div class="flow-step active" id="step0">
+        <div class="flow-node start-node">Is your house fine?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowGo(1)">Yes</button>
+          <button class="flow-btn" onclick="flowEnd()">No</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="step1">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">Are you sure?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowGo(2)">Yes, absolutely</button>
+          <button class="flow-btn" onclick="flowEnd()">Actually, maybe not</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="step2">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">Has it been inspected in the last 3 years?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowGo(3)">Yes</button>
+          <button class="flow-btn" onclick="flowEnd()">No</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="step3">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">Did the inspector spend more than 2 hours?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowGo(4)">Yes</button>
+          <button class="flow-btn" onclick="flowEnd()">Under 2 hours, actually</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="step4">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">Was the report more than 30 pages?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowGo(5)">Yes, many pages</button>
+          <button class="flow-btn" onclick="flowEnd()">It was... short</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="step5">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">Do you truly believe everything is fine?</div>
+        <div class="flow-btns">
+          <button class="flow-btn yes" onclick="flowEnd2()">Yes. I'm confident.</button>
+          <button class="flow-btn" onclick="flowEnd()">I mean... who can say</button>
+        </div>
+      </div>
+
+      <div class="flow-step" id="stepEnd">
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node end-node show">Call Dr. Spinner.</div>
+        <p style="margin-top: 1.5rem; font-size: 0.82rem; color: var(--grey); font-style: italic;">This was always going to be the answer.</p>
+        <button class="flow-reset" onclick="flowReset()">Start Over (Result Will Be the Same)</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">The Institute for Residential Structural Medicine</div>
+      <div class="footer-text">
+        The Institute for Residential Structural Medicine is a wholly fictional institution. Ryan Spinner is, however, a very real and frighteningly competent home inspector. This has been peer-reviewed by his brother Andrew, who owns a canoe shop, and is therefore equally credible.
+      </div>
+      <div class="footer-text">
+        Dr. Spinner's credentials (MD, CAHPI, RDC, SBSI, CDU) are listed in the order of their impressiveness. The @drspinner handle was self-assigned and has been uncontested for years. The Institute considers this binding.
+      </div>
+      <div class="footer-copy">© 2026 The Institute. All diagnoses are final. The Institute is not responsible for emotional distress caused by inspection reports. Carson Dunlop University is not a real university. This is, unfortunately, not a real institute. Ryan Spinner is, unfortunately, very real.</div>
+    </div>
+  </footer>
+
+</div><!-- end #main -->
+
+<!-- KONAMI MODAL -->
+<div class="modal-overlay" id="konamiModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('konamiModal').classList.remove('show')">✕</button>
+    <h2>⚠ RESTRICTED CASE FILE</h2>
+    <div class="modal-sub">Classification Level: Eyes of Dr. Spinner Only · Case #0001</div>
+    <p style="font-size:0.78rem; color: var(--grey); margin-bottom: 1.2rem;">The following inspection report has been partially redacted pending litigation, emotional recovery, and the homeowner's ability to make eye contact with a contractor again.</p>
+    <div class="redacted-line short"></div>
+    <div class="redacted-line long"></div>
+    <div style="padding: 0.6rem 0; font-size: 0.82rem; color: var(--cream);">Foundation: <span style="background: white; color: white;">SEVERE STRUCTURAL</span> — estimated remediation <span style="background: white; color: white;">$47,000–$80,000</span>. Homeowner was informed. Homeowner laughed nervously. Homeowner has not laughed since.</div>
+    <div class="redacted-line full"></div>
+    <div class="redacted-line med"></div>
+    <div style="padding: 0.6rem 0; font-size: 0.82rem; color: var(--cream);">Electrical: Knob-and-tube identified in <span style="background: white; color: white;">ENTIRE SECOND FLOOR</span>. Previous owner described this as "vintage." Dr. Spinner described it as <span style="background: white; color: white;">A DOCUMENTED FIRE HAZARD.</span></div>
+    <div class="redacted-line full"></div>
+    <div class="redacted-line short"></div>
+    <div class="redacted-line long"></div>
+    <div style="padding: 0.6rem 0; font-size: 0.82rem; color: var(--cream);">Attic: Ventilation described as <span style="background: white; color: white;">"ASPIRATIONAL."</span> Moisture levels: <span style="background: white; color: white;">SIGNIFICANT.</span> What was living up there: <span style="background: white; color: white; display: inline-block; width: 120px;"></span></div>
+    <div class="redacted-line full"></div>
+    <div class="modal-note">"The house was, in my clinical opinion, trying to tell everyone something. No one had been listening. I listened. I have since billed accordingly." — Dr. R. Spinner, MD</div>
+    <div class="modal-stamp">CLASSIFIED</div>
+    <div style="clear:both"></div>
+  </div>
+</div>
+
+<!-- EASTER EGG TOAST -->
+<div class="toast" id="toast">He has never failed an inspection.<br>Every house has failed him.</div>
+
+<script>
+  // ===== SPLASH =====
+  function enterFacility() {
+    document.getElementById('splash').classList.add('fade-out');
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      const main = document.getElementById('main');
+      main.classList.add('visible');
+      initReveal();
+      startCounter();
+    }, 800);
+  }
+
+  // ===== SCROLL REVEAL =====
+  function initReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('revealed'), e.target.dataset.delay || 0);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.spec-card, .pub-item, .testimonial').forEach((el, i) => {
+      el.dataset.delay = i * 80;
+      observer.observe(el);
+    });
+  }
+
+  // ===== COUNTER =====
+  function startCounter() {
+    const el = document.getElementById('houseCounter');
+    const target = 4847;
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        let count = 0;
+        const step = Math.ceil(target / 80);
+        const interval = setInterval(() => {
+          count = Math.min(count + step, target);
+          el.textContent = count.toLocaleString();
+          if (count >= target) clearInterval(interval);
+        }, 20);
+        observer.disconnect();
+      }
+    });
+    observer.observe(el);
+  }
+
+  // ===== DIAGNOSTIC =====
+  const diagnoses = [
+    { text: "Patient presents with acute Vendor Disclosure Deficiency Syndrome. The previous owner was aware. They chose not to be. Dr. Spinner recommends immediate re-listing.", code: "ICD-RS: VDD-9 · Prognosis: Expensive" },
+    { text: "Diagnosis: Chronic Willful Foundation Ignorance, compounded by Realtor Optimism Bias. The crack has been there longer than your marriage. Recommended treatment: a structural engineer and a moment of silence.", code: "ICD-RS: WFI-3 · Prognosis: Structural" },
+    { text: "The furnace exhibits classic Pre-Terminal Personality Disorder. The noise you described as 'ominous' is, clinically speaking, 'correct.' It knows. Dr. Spinner advises budgeting accordingly.", code: "ICD-RS: FPD-11 · Prognosis: One More Winter, Maybe" },
+    { text: "The electrical panel has been classified as a Designated Heritage Fire Risk. The Post-It note saying DO NOT TOUCH was written by someone who understood the situation far better than your seller did.", code: "ICD-RS: DHR-4 · Prognosis: Requires Immediate Rewire" },
+    { text: "Dr. Spinner has diagnosed Sentient Attic Syndrome. This is rare. This is expensive. This is also, somehow, the previous owner's fault. The attic has rights. They will cost you.", code: "ICD-RS: SAS-1 · Prognosis: Unknown. Even to Dr. Spinner." },
+    { text: "Moisture Proliferation Disorder, Stage 3. The efflorescence is not 'a little white dust.' It is a message. Dr. Spinner has read the message. You cannot afford to read the message.", code: "ICD-RS: MPD-7 · Prognosis: Waterproofing Required" },
+    { text: "Acute Listing Description Trauma. 'Move-in ready' was defined loosely. 'Charming' was defined very loosely. Dr. Spinner defines neither. Dr. Spinner defines reality.", code: "ICD-RS: LDT-2 · Prognosis: Renovation Budget Needed" },
+    { text: "The plumbing has entered what Dr. Spinner calls The Resignation Phase. It is not broken. It is tired. It has seen things. It would like to retire. This will happen on its schedule, not yours.", code: "ICD-RS: PRP-6 · Prognosis: 2–5 Years" },
+    { text: "Diagnosis: Home Inspection Grief Disorder. You had the inspection. You read the report. You bought anyway. Dr. Spinner does not judge. Dr. Spinner has seen this 4,847 times. He still shows up.", code: "ICD-RS: HIGD-0 · Prognosis: You Knew. We Both Knew." }
+  ];
+
+  function diagnose() {
+    const complaint = document.getElementById('complaint').value;
+    const duration = document.getElementById('duration').value;
+    const realtor = document.getElementById('realtor').checked;
+
+    if (!complaint || !duration) {
+      alert('Dr. Spinner requires a complete intake form. Please select all fields.');
+      return;
+    }
+
+    const d = diagnoses[Math.floor(Math.random() * diagnoses.length)];
+    let extra = '';
+    if (realtor) extra = ' Note: The real estate agent has been informed. They said they are "sure it's fine." They are not sure. They are not a doctor.';
+
+    document.getElementById('diagText').textContent = d.text + extra;
+    document.getElementById('diagCode').textContent = d.code + ' · Case filed: ' + new Date().toLocaleDateString('en-CA');
+    const result = document.getElementById('diagResult');
+    result.classList.add('show');
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ===== FLOWCHART =====
+  let currentStep = 0;
+
+  function flowGo(step) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = step;
+    document.getElementById('step' + step).classList.add('active');
+  }
+
+  function flowEnd() {
+    for (let i = 0; i <= 5; i++) {
+      const el = document.getElementById('step' + i);
+      if (el) el.classList.remove('active');
+    }
+    document.getElementById('stepEnd').classList.add('active');
+    currentStep = 99;
+  }
+
+  function flowEnd2() {
+    // Even "yes I'm fine" leads to Dr. Spinner
+    flowEnd();
+  }
+
+  function flowReset() {
+    document.getElementById('stepEnd').classList.remove('active');
+    for (let i = 0; i <= 5; i++) {
+      const el = document.getElementById('step' + i);
+      if (el) el.classList.remove('active');
+    }
+    currentStep = 0;
+    document.getElementById('step0').classList.add('active');
+  }
+
+  // ===== EASTER EGG 1: Click name 5 times =====
+  let nameClicks = 0;
+  document.getElementById('drName').addEventListener('click', () => {
+    nameClicks++;
+    if (nameClicks >= 5) {
+      nameClicks = 0;
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+  });
+
+  // ===== EASTER EGG 2: Konami Code =====
+  const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiIdx = 0;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === konami[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === konami.length) {
+        document.getElementById('konamiModal').classList.add('show');
+        konamiIdx = 0;
+      }
+    } else {
+      konamiIdx = 0;
+    }
+  });
+
+  document.getElementById('konamiModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+</script>
+</body>
+</html>
