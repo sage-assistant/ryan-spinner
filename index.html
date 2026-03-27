@@ -951,6 +951,223 @@
     .rating-label-text { min-width: 120px; font-size: 0.72rem; }
     .plaque { padding: 2rem 1.5rem; }
   }
+
+  /* ===== TD BANK SECTION ===== */
+  --td-green: #3fa535;
+
+  .td-section {
+    background: var(--black);
+    border-top: 3px solid #1a4a1a;
+    border-bottom: 3px solid #1a4a1a;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .td-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(63,165,53,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .td-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .td-flag {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: #1a3a1a;
+    border: 1px solid #3fa535;
+    color: #3fa535;
+    font-family: 'Special Elite', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: tdpulse 2s ease-in-out infinite;
+  }
+
+  @keyframes tdpulse {
+    0%, 100% { border-color: #3fa535; color: #3fa535; }
+    50% { border-color: #1a4a1a; color: #2a7a22; }
+  }
+
+  .td-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 9vw, 6rem);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    color: var(--cream);
+    margin: 0.5rem 0;
+  }
+
+  .td-subtitle {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.2em;
+    color: #3fa535;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .td-body {
+    font-size: 1rem;
+    color: var(--grey);
+    line-height: 1.9;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: left;
+  }
+
+  .td-body p { margin-bottom: 1.2rem; }
+
+  .td-highlight {
+    color: var(--cream);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .td-evidence {
+    background: #0c0c0a;
+    border: 1px solid #1a3a1a;
+    margin: 3rem 0;
+    text-align: left;
+    overflow: hidden;
+  }
+
+  .td-evidence-header {
+    background: #0f200f;
+    padding: 0.9rem 1.5rem;
+    font-family: 'Special Elite', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: #3fa535;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1a3a1a;
+  }
+
+  .td-timeline {
+    padding: 0;
+  }
+
+  .td-event {
+    padding: 1.5rem;
+    border-bottom: 1px solid #1a2a1a;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .td-event:last-child { border-bottom: none; }
+
+  .td-event-final {
+    background: rgba(63,165,53,0.03);
+  }
+
+  .td-time {
+    font-family: 'Special Elite', serif;
+    font-size: 0.75rem;
+    color: #3fa535;
+    letter-spacing: 0.1em;
+    padding-top: 0.1rem;
+    line-height: 1.5;
+  }
+
+  .td-event-text {
+    font-size: 0.87rem;
+    color: var(--grey);
+    line-height: 1.8;
+  }
+
+  .td-quotes {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #1a3a1a;
+    margin: 3rem 0;
+    text-align: left;
+  }
+
+  .td-quote-item {
+    padding: 2rem 1.8rem;
+    border-bottom: 1px solid #1a3a1a;
+  }
+
+  .td-quote-item:last-child { border-bottom: none; }
+
+  .td-quote-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--parchment);
+    margin-bottom: 0.7rem;
+  }
+
+  .td-quote-text::before { content: '\201C'; color: #3fa535; }
+  .td-quote-text::after { content: '\201D'; color: #3fa535; }
+
+  .td-quote-cite {
+    font-family: 'Special Elite', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: #3fa535;
+    text-transform: uppercase;
+  }
+
+  .td-resolution {
+    background: #0f1a0f;
+    border: 1px solid #3fa535;
+    padding: 1.2rem 2rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .td-resolution-label {
+    font-family: 'Special Elite', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: #3fa535;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .td-resolution-text {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .td-closer {
+    font-size: 1rem;
+    color: var(--grey);
+    line-height: 1.9;
+    max-width: 620px;
+    margin: 2.5rem auto 0;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .td-closer em {
+    color: var(--cream);
+    font-size: 1.3rem;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 580px) {
+    .td-event { grid-template-columns: 1fr; gap: 0.4rem; }
+  }
 </style>
 </head>
 <body>
@@ -1207,20 +1424,95 @@
     </div>
   </div>
 
+  <!-- TD BANK CHAPTER -->
+  <div class="chapter-break"><div class="chapter-line"></div><div class="chapter-label">Chapter IV · The Darkness</div><div class="chapter-line"></div></div>
+
+  <div class="td-section">
+    <div class="td-inner">
+      <div class="td-flag">⚠ Breaking Development · March 2026</div>
+      <div class="section-eyebrow" style="text-align:center; margin-bottom:0.5rem;">The One He Couldn't Spin</div>
+      <div class="td-title">TD Bank.</div>
+      <div class="td-subtitle">How a Canadian Financial Institution Humbled the Spin Doc</div>
+
+      <div class="td-body">
+        <p>There are, in the long arc of a legendary life, moments that test the legend. Moments that arrive not with fanfare, but with hold music.</p>
+        <p>This week, Ryan Spinner — The Spin Doc — Camp Kadimah's most accomplished pivot artist, a man who never lost — was <span class="td-highlight">absolutely, categorically, and without mercy destroyed by TD Bank Canada.</span></p>
+        <p>He did not see it coming. No one does. TD Bank does not announce itself. It simply places you on hold, and then it waits, and then it transfers you, and then it places you on hold again. Somewhere between the fourth repetition of the hold music and the third agent who could not actually help, <span class="td-highlight">the Spin Doc met something he could not pivot out of.</span></p>
+        <p>A bank. A green bank. A green bank with a logo of two interlocking shapes that somehow represents the complete absence of accountability.</p>
+      </div>
+
+      <div class="td-evidence">
+        <div class="td-evidence-header">📋 &nbsp; Documented Timeline of Events · March 2026</div>
+        <div class="td-timeline">
+          <div class="td-event">
+            <div class="td-time">Day 1<br>~9:14 AM</div>
+            <div class="td-event-text">Ryan contacts TD Bank regarding what should be a routine matter. He is told to call a different number. He calls the different number. He is told to call the original number. He is The Spin Doc. He takes a breath. He calls back.</div>
+          </div>
+          <div class="td-event">
+            <div class="td-time">Day 1<br>~11:47 AM</div>
+            <div class="td-event-text">After 2 hours and 33 minutes on hold, Ryan reaches an agent named either "Trevor" or "Kevin" — accounts differ. The agent informs Ryan this is "not their department." It is unclear what department it is. The agent does not know either. This fact does not appear to trouble the agent.</div>
+          </div>
+          <div class="td-event">
+            <div class="td-time">Day 1<br>~2:03 PM</div>
+            <div class="td-event-text">Ryan visits a TD branch in person. The Spin Doc, who has never needed to show up anywhere twice, shows up somewhere for the second time in one day. The branch cannot help with this. No branch can help with this. There is a special team. The special team is only reachable by phone. Ryan knows what the phone does.</div>
+          </div>
+          <div class="td-event">
+            <div class="td-time">Day 2<br>~8:30 AM</div>
+            <div class="td-event-text">Ryan calls back. He is placed on hold. The hold music is the same. It has always been the same. It will always be the same. At some point it becomes unclear whether Ryan is on hold or whether hold has simply become a condition Ryan inhabits, like weather.</div>
+          </div>
+          <div class="td-event td-event-final">
+            <div class="td-time">This Week<br>Ongoing</div>
+            <div class="td-event-text">Ryan Spinner, The Spin Doc, veteran of countless Kadimah summers, a man with an unblemished record of successful pivots, sits across from an institution that does not care about his nickname. TD Bank has no nickname. TD Bank does not pivot. TD Bank simply <em>is</em> — eternal, indifferent, mildly evil — like a glacier that charges monthly maintenance fees and asks you to verify your identity eight times.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="td-quotes">
+        <div class="td-quote-item">
+          <div class="td-quote-text">He called back a third time. He got through. They said it was resolved. He thought it was over. It was not over. There was a form. There is always a form. The form required information he had already provided. To TD Bank, prior information does not exist. Only current information exists. Current information must be re-submitted. This is TD Bank's entire philosophy.</div>
+          <div class="td-quote-cite">Anonymous Witness · Was Present for Hold Music, Rounds 3 and 4</div>
+        </div>
+        <div class="td-quote-item">
+          <div class="td-quote-text">The Spin Doc pivots people. TD Bank does not pivot. TD Bank transfers you to a department that transfers you to the original department. It is a circle. It has always been a circle. The circle is painted TD green, which is a colour that now means something different to Ryan than it did before this week.</div>
+          <div class="td-quote-cite">Kadimah Historical Society · Emergency Convening · March 2026</div>
+        </div>
+        <div class="td-quote-item">
+          <div class="td-quote-text">I can confirm it happened. I will not say more than that out of respect for what he went through. No one should go through what he went through. He went through it. He is still going through it. I offered him a canoe. He did not take the canoe. I think he is processing.</div>
+          <div class="td-quote-cite">Andrew Spinner · Brother · Canoe Proprietor · Briefly Unreachable (Was on the Water, Unbothered)</div>
+        </div>
+      </div>
+
+      <div class="td-resolution">
+        <div class="td-resolution-label">Current Status as of Publication</div>
+        <div class="td-resolution-text">UNRESOLVED &nbsp;·&nbsp; ONGOING &nbsp;·&nbsp; TD BANK IS AWARE &nbsp;·&nbsp; TD BANK DOES NOT APPEAR TO CARE</div>
+      </div>
+
+      <div class="td-closer">
+        The Spin Doc has survived everything that Camp Kadimah threw at him. He has pivoted out of situations that lesser men could not have entered. He has, by every credible account, never lost.
+        <br><br>
+        And yet.
+        <br><br>
+        TD Bank Canada.
+        <em>TD Bank Canada.</em>
+      </div>
+    </div>
+  </div>
+
   <!-- CLOSING CARD -->
   <div class="close-card">
     <div class="close-card-text">
       "He still has it. You don't lose what Ryan has.<br>
-      You either have it or you don't.<br>
-      He has it. He always had it.<br>
-      The houses have no idea."
+      TD Bank Canada has temporarily misplaced it on his behalf.<br>
+      It will be returned.<br>
+      Pending processing. Allow 5 to 7 business days."
     </div>
     <div class="close-card-credits">
       Directed by No One In Particular<br>
       Research provided by People Who Were There<br>
-      Peer reviewed by Andrew Spinner, Canoe Proprietor<br>
+      Peer reviewed by Andrew Spinner, Canoe Proprietor (Briefly Unavailable)<br>
+      TD Bank Canada was invited to comment. TD Bank Canada placed us on hold.<br>
       Ryan Spinner is a real person. This is a real tribute. Neither of these facts require your belief.<br><br>
-      © 2026 The Kadimah Documentary Trust · All Pivots Reserved
+      © 2026 The Kadimah Documentary Trust · All Pivots Reserved · TD Bank Canada: Still Holding
     </div>
   </div>
 
